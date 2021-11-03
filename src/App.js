@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+
+import Form from './components/Form'
+import ToDos from './components/ToDos'
+import Alert from './components/Alert'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const toDos = [
+		{id: 1, title: 'Hello1'},
+		{id: 2, title: 'Hello2'},
+		{id: 3, title: 'Hello3'}
+	]
+	// const alert = {type: 'warning', message: 'Yx ti blia'}
+	const alert = null
+
+	return (
+		<div className='container p-3'>
+			<Alert alert={alert}/>
+			<Form/>
+			<ToDos toDos={toDos}/>
+		</div>
+	)
 }
 
-export default App;
+export default App
