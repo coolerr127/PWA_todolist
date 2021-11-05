@@ -1,4 +1,4 @@
-import { SHOW_LOADER, ADD_TODO, FETCH_TODOS, REMOVE_TODO } from '../types'
+import { SHOW_LOADER, ADD_TODO, FETCH_TODOS, REMOVE_TODO, SET_TODO_LIST } from '../types'
 
 function firebaseReducer(state, action) {
 	switch (action.type) {
@@ -22,6 +22,11 @@ function firebaseReducer(state, action) {
 			return {
 				...state,
 				todos: state.todos.filter(todo => todo.id !== action.payload),
+			}
+		case SET_TODO_LIST:
+			return {
+				...state,
+				todos: action.payload,
 			}
 
 		default:

@@ -4,7 +4,13 @@ import axios from 'axios'
 import { FirebaseContext } from './firebaseContext'
 import { AlertContext } from '../alert/alertContext'
 import firebaseReducer from './firebaseReducer'
-import { ADD_TODO, FETCH_TODOS, REMOVE_TODO, SHOW_LOADER } from '../types'
+import {
+	ADD_TODO,
+	FETCH_TODOS,
+	REMOVE_TODO,
+	SET_TODO_LIST,
+	SHOW_LOADER,
+} from '../types'
 
 const url = process.env.REACT_APP_DB_URL
 
@@ -39,9 +45,11 @@ function FirebaseState({ children }) {
 	}
 
 	async function addTodo(title) {
+		let maxOrder = state.todos.length
 		const todo = {
 			title,
-			compile: false,
+			order: maxOrder++,
+			complite: false,
 		}
 
 		try {
@@ -57,24 +65,34 @@ function FirebaseState({ children }) {
 		}
 	}
 
-	// async function compliteTodo(id) {
-	// 	const todo = {
-	// 		title,
-	// 		compile: false,
-	// 	}
+	async function compliteTodo(id) {
+		const todo = state.todos.find(todo => todo.id === id)
+		todo.complite = !todo.complite
 
-	// 	try {
-	// 		const res = await axios.post(`${url}/todos.json`, todo)
-	// 		const payload = {
-	// 			...todo,
-	// 			id: res.data.name,
-	// 		}
+		await axios
+			.patch(`${url}/todos/${id}.json`, todo)
+			.then(() => {
+				if (todo.complite === true) {
+					alert.showAlert('Woohoo!', 'success')
+				} else {
+					alert.showAlert('So bad :(', 'light')
+				}
+			})
+			.catch(() => {
+				alert.showAlert('Something went wrong', 'danger')
+			})
+	}
 
-	// 		dispatch({ type: ADD_TODO, payload })
-	// 	} catch (e) {
-	// 		throw new Error(e.message)
-	// 	}
-	// }
+	async function changeTodo(id, title) {
+		const todo = state.todos.find(todo => todo.id === id)
+		todo.title = title
+
+		try {
+			axios.patch(`${url}/todos/${id}.json`, todo)
+		} catch (e) {
+			throw new Error(e.message)
+		}
+	}
 
 	async function removeTodo(id) {
 		await axios
@@ -92,6 +110,35 @@ function FirebaseState({ children }) {
 		})
 	}
 
+	async function setTodoList(e, todo, currentTodo) {
+		e.preventDefault()
+		const newList = state.todos.map(t => {
+			if (t.id === todo.id) {
+				return { ...t, order: currentTodo.order }
+			}
+			if (t.id === currentTodo.id) {
+				return { ...t, order: todo.order }
+			}
+			return t
+		})
+
+		try {
+			await axios.put(`${url}/todos.json`, newList).then(() => {
+				alert.showAlert('success', 'success')
+			})
+
+			dispatch({
+				type: SET_TODO_LIST,
+				payload: newList,
+			})
+		} catch (e) {
+			alert.showAlert('Something went wrong', 'danger')
+			throw new Error(e.message)
+		}
+
+		// e.target.style.background = '1'
+	}
+
 	return (
 		<FirebaseContext.Provider
 			value={{
@@ -99,6 +146,9 @@ function FirebaseState({ children }) {
 				fetchTodos,
 				addTodo,
 				removeTodo,
+				compliteTodo,
+				changeTodo,
+				setTodoList,
 				todos: state.todos,
 				loading: state.loading,
 			}}

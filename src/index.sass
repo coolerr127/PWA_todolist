@@ -22,10 +22,62 @@ code
 	top: 0
 	right: 0
 	width: 300px
+	z-index: 10
 
 .btn
 	width: 40px
-	// height: 26px
+
+input.btn
+	width: auto
 
 .btn + .btn
 	margin-left: 5px
+
+.complite-true
+	background-color: #09ff0048
+
+.edit-todo
+	width: 75%
+
+	input
+		box-shadow: none !important
+		border-color: #ffc107 !important
+		height: 31px
+		font-size: 16px !important
+
+		&[type="submit"]
+			color: #ffc107 !important
+
+			&:hover
+				background-color: #ffc107
+				color: black !important
+
+@media screen and (max-width: 1024px)
+	.container
+		width: 100%
+		max-width: 100%
+		margin-left: 0 !important
+		margin-right: 0 !important
+
+	.todo
+		flex-direction: column
+
+		.buttons
+			display: flex
+			justify-content: space-between
+			margin-top: 10px
+			width: 100%
+
+	.edit-todo
+		width: 100%
+		// margin-bottom: 20px
+
+	input
+		text-align: center
+		border-radius: 5px!important
+
+		&.btn
+			display: none
+
+	.btn
+		width: 30%

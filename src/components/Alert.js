@@ -11,7 +11,7 @@ function Alert() {
 
 	return (
 		<div
-			class={`alert alert-${alert.type || 'warning'} alert-dismissible`}
+			className={`alert alert-${alert.type || 'warning'} alert-dismissible`}
 			role='alert'
 		>
 			<strong>Alert!</strong>
@@ -19,7 +19,7 @@ function Alert() {
 			<button
 				onClick={hideAlert}
 				type='button'
-				class='btn-close'
+				className='btn-close'
 				aria-label='Close'
 			></button>
 		</div>

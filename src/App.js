@@ -10,12 +10,12 @@ function App() {
 	return (
 		<AlertState>
 			<FirebaseState>
-				<div className='container p-3'>
-					<Alert alert={alert} />
+				<div className='container p-3 bg-white text-dark'>
 					<Form />
 					<ToDos />
 				</div>
 			</FirebaseState>
+			<Alert alert={alert} />
 		</AlertState>
 	)
 }

@@ -28,14 +28,20 @@ function Form() {
 
 	return (
 		<form onSubmit={submitHandler}>
-			<div class='input-group input-group-lg'>
+			<div className='input-group input-group-lg'>
 				<input
+					autoFocus='true'
 					type='text'
-					class='form-control'
+					className='form-control'
 					placeholder='Add ToDo'
 					value={value}
 					onChange={e => setValue(e.target.value)}
 				/>
+				<input
+							type='submit'
+							className='btn btn-outline-primary btn-sm'
+							value='submit'
+						/>
 			</div>
 		</form>
 	)
