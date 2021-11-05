@@ -1,6 +1,8 @@
 # Test project for Territory IT
-To dd list
-## Available Scripts
+React to-do list
+
+## Screenshots
 
 ![Alt text](/screenshots/desktop.png?raw=true "Desktop")
+![Alt text](/screenshots/mobile.jpeg?raw=true "Mobile")
 
